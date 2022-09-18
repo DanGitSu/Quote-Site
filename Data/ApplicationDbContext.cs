@@ -10,6 +10,6 @@ namespace Goals_Site.Data
             : base(options)
         {
         }
-        public DbSet<Goals_Site.Models.Job> Job { get; set; }
+       
     }
 }
