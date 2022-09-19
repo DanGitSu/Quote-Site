@@ -1,0 +1,137 @@
+﻿@model IEnumerable<Goals_Site.Models.Job>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Job_Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project_Manager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sales_Manager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client_Reference)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client_Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Info)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Compliance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client_Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Site_Contact_From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Site_Phone_From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address_From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Site_Contact_To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Site_Phone2_To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address_To)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Job_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Issue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project_Manager)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sales_Manager)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client_Reference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client_Contact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account_Info)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Compliance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client_Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Site_Contact_From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Site_Phone_From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address_From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Site_Contact_To)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Site_Phone2_To)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address_To)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
