@@ -19,10 +19,7 @@ namespace Goals_Site.Models
         public Boolean Lift { get; set; }
         public Boolean Loading_Dock { get; set; }
 
-        Site() 
-        {
-        
-        }
+
 
     }
 }

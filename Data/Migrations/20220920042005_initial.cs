@@ -4,7 +4,7 @@
 
 namespace Goals_Site.Data.Migrations
 {
-    public partial class siteclient : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

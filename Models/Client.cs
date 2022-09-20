@@ -9,9 +9,7 @@
         public string Email { get; set; } = null!;
         public string Reference { get; set; } = null!;
 
-        Client()
-        {
-
-        }
+        // Site Collection
+        public ICollection<Site> Sites { get; set; } = null!;
     }
 }

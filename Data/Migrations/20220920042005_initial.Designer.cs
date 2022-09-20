@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Goals_Site.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220920022418_site&client")]
-    partial class siteclient
+    [Migration("20220920042005_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
