@@ -4,9 +4,10 @@ namespace Goals_Site.Models
 {
     public class Site
     {
-        public int ID { get; set; }
-        public string? Address { get; set; }
-        public string? Contact_Name { get; set; }
+        public int Site_id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Contact_Name { get; set; }
         public int Contact_Phone { get; set; }
         public Boolean Stairs { get; set; }
         public Boolean Lift { get; set; }
