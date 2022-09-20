@@ -2,7 +2,7 @@
 {
     public class Sales_manager
     {
-        public int Sales_manager_id { get; set; }
+        public int Sales_managerId { get; set; }
         public string Name { get; set; }
         public int Phone { get; set; }
 
