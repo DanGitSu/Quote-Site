@@ -159,9 +159,6 @@ namespace Goals_Site.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Contact_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -183,8 +180,6 @@ namespace Goals_Site.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("SiteId");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("Site");
                 });
@@ -418,13 +413,6 @@ namespace Goals_Site.Data.Migrations
                     b.Navigation("Sales_manager");
                 });
 
-            modelBuilder.Entity("Goals_Site.Models.Site", b =>
-                {
-                    b.HasOne("Goals_Site.Models.Client", null)
-                        .WithMany("Sites")
-                        .HasForeignKey("ClientId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -474,11 +462,6 @@ namespace Goals_Site.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Goals_Site.Models.Client", b =>
-                {
-                    b.Navigation("Sites");
                 });
 #pragma warning restore 612, 618
         }

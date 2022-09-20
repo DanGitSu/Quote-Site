@@ -65,17 +65,11 @@ namespace Goals_Site.Data.Migrations
                     Contact_Phone = table.Column<int>(type: "int", nullable: false),
                     Stairs = table.Column<bool>(type: "bit", nullable: false),
                     Lift = table.Column<bool>(type: "bit", nullable: false),
-                    Loading_Dock = table.Column<bool>(type: "bit", nullable: false),
-                    ClientId = table.Column<int>(type: "int", nullable: true)
+                    Loading_Dock = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Site", x => x.SiteId);
-                    table.ForeignKey(
-                        name: "FK_Site_Client_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Client",
-                        principalColumn: "ClientId");
                 });
 
             migrationBuilder.CreateTable(
@@ -132,11 +126,6 @@ namespace Goals_Site.Data.Migrations
                 name: "IX_Job_Sales_managerId",
                 table: "Job",
                 column: "Sales_managerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Site_ClientId",
-                table: "Site",
-                column: "ClientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -148,13 +137,13 @@ namespace Goals_Site.Data.Migrations
                 name: "Site");
 
             migrationBuilder.DropTable(
+                name: "Client");
+
+            migrationBuilder.DropTable(
                 name: "Project_manager");
 
             migrationBuilder.DropTable(
                 name: "Sales_manager");
-
-            migrationBuilder.DropTable(
-                name: "Client");
         }
     }
 }

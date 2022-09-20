@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Goals_Site.Data;
 using Goals_Site.Models;
+using System.Drawing.Printing;
+using Microsoft.AspNetCore.Http;
 
 namespace Goals_Site.Controllers
 {
@@ -65,10 +67,16 @@ namespace Goals_Site.Controllers
         {
             if (ModelState.IsValid)
             {
+                return RedirectToAction("it works");
                 _context.Add(job);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            else {
+                await Response.WriteAsync("STARTTTTTT");
+                foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors)) { await Response.WriteAsync(error.ToString()); }
+            }
+            
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
             ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
             ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
