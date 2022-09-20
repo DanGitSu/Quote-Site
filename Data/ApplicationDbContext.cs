@@ -10,6 +10,8 @@ namespace Goals_Site.Data
             : base(options)
         {
         }
+        public DbSet<Goals_Site.Models.Site> Site { get; set; }
+        public DbSet<Goals_Site.Models.Client> Client { get; set; }
        
     }
 }
