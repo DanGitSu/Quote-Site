@@ -22,7 +22,8 @@ namespace Goals_Site.Controllers
         // GET: Jobs
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Job.ToListAsync());
+            var applicationDbContext = _context.Job.Include(j => j.Client).Include(j => j.Project_manager).Include(j => j.Sales_manager);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Jobs/Details/5
@@ -34,7 +35,10 @@ namespace Goals_Site.Controllers
             }
 
             var job = await _context.Job
-                .FirstOrDefaultAsync(m => m.JobID == id);
+                .Include(j => j.Client)
+                .Include(j => j.Project_manager)
+                .Include(j => j.Sales_manager)
+                .FirstOrDefaultAsync(m => m.JobId == id);
             if (job == null)
             {
                 return NotFound();
@@ -46,6 +50,9 @@ namespace Goals_Site.Controllers
         // GET: Jobs/Create
         public IActionResult Create()
         {
+            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId");
+            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId");
+            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId");
             return View();
         }
 
@@ -54,7 +61,7 @@ namespace Goals_Site.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("JobID,JobName,Manager,Client")] Job job)
+        public async Task<IActionResult> Create([Bind("JobId,Job_number,Date,Start,Est_finish_time,Scope,Project_managerId,Sales_managerId,ClientId,From_site,To_site")] Job job)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +69,9 @@ namespace Goals_Site.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
+            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
+            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
             return View(job);
         }
 
@@ -78,6 +88,9 @@ namespace Goals_Site.Controllers
             {
                 return NotFound();
             }
+            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
+            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
+            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
             return View(job);
         }
 
@@ -86,9 +99,9 @@ namespace Goals_Site.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("JobID,JobName,Manager,Client")] Job job)
+        public async Task<IActionResult> Edit(int id, [Bind("JobId,Job_number,Date,Start,Est_finish_time,Scope,Project_managerId,Sales_managerId,ClientId,From_site,To_site")] Job job)
         {
-            if (id != job.JobID)
+            if (id != job.JobId)
             {
                 return NotFound();
             }
@@ -102,7 +115,7 @@ namespace Goals_Site.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!JobExists(job.JobID))
+                    if (!JobExists(job.JobId))
                     {
                         return NotFound();
                     }
@@ -113,6 +126,9 @@ namespace Goals_Site.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
+            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
+            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
             return View(job);
         }
 
@@ -125,7 +141,10 @@ namespace Goals_Site.Controllers
             }
 
             var job = await _context.Job
-                .FirstOrDefaultAsync(m => m.JobID == id);
+                .Include(j => j.Client)
+                .Include(j => j.Project_manager)
+                .Include(j => j.Sales_manager)
+                .FirstOrDefaultAsync(m => m.JobId == id);
             if (job == null)
             {
                 return NotFound();
@@ -155,7 +174,7 @@ namespace Goals_Site.Controllers
 
         private bool JobExists(int id)
         {
-          return _context.Job.Any(e => e.JobID == id);
+          return _context.Job.Any(e => e.JobId == id);
         }
     }
 }

@@ -12,27 +12,69 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JobName)
+            @Html.DisplayNameFor(model => model.Job_number)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JobName)
+            @Html.DisplayFor(model => model.Job_number)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Manager)
+            @Html.DisplayNameFor(model => model.Date)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Manager)
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Start)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Start)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Est_finish_time)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Est_finish_time)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Scope)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Scope)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Project_manager)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Project_manager.Project_managerId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sales_manager)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sales_manager.Sales_managerId)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Client)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Client)
+            @Html.DisplayFor(model => model.Client.ClientId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.From_site)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.From_site)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.To_site)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.To_site)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="JobID" />
+        <input type="hidden" asp-for="JobId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
