@@ -65,17 +65,13 @@ namespace Goals_Site.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("JobId,Job_number,Date,Start,Est_finish_time,Scope,Project_managerId,Sales_managerId,ClientId,From_site,To_site")] Job job)
         {
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("it works");
+            //if (ModelState.IsValid)
+            //{
+                
                 _context.Add(job);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            else {
-                await Response.WriteAsync("STARTTTTTT");
-                foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors)) { await Response.WriteAsync(error.ToString()); }
-            }
+            //}
             
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
             ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
