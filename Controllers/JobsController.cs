@@ -52,9 +52,9 @@ namespace Goals_Site.Controllers
         // GET: Jobs/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId");
-            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId");
-            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId");
+            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "Name");
+            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Name");
+            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Name");
             return View();
         }
 

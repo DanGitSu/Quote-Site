@@ -15,6 +15,7 @@ namespace Goals_Site.Data
         public DbSet<Goals_Site.Models.Project_manager> Project_manager { get; set; }
         public DbSet<Goals_Site.Models.Sales_manager> Sales_manager { get; set; }
         public DbSet<Goals_Site.Models.Job> Job { get; set; }
+        public DbSet<Goals_Site.Models.Equipment> Equipment { get; set; }
        
     }
 }

@@ -1,0 +1,208 @@
+﻿@model Goals_Site.Models.Equipment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Equipment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="threeTonne_truck" class="control-label"></label>
+                <input asp-for="threeTonne_truck" class="form-control" />
+                <span asp-validation-for="threeTonne_truck" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MR" class="control-label"></label>
+                <input asp-for="MR" class="form-control" />
+                <span asp-validation-for="MR" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pads" class="control-label"></label>
+                <input asp-for="Pads" class="form-control" />
+                <span asp-validation-for="Pads" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Workstation_trolley" class="control-label"></label>
+                <input asp-for="Workstation_trolley" class="form-control" />
+                <span asp-validation-for="Workstation_trolley" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bubble_wrap" class="control-label"></label>
+                <input asp-for="Bubble_wrap" class="form-control" />
+                <span asp-validation-for="Bubble_wrap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Camera" class="control-label"></label>
+                <input asp-for="Camera" class="form-control" />
+                <span asp-validation-for="Camera" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Stocktake_sheets" class="control-label"></label>
+                <input asp-for="Stocktake_sheets" class="form-control" />
+                <span asp-validation-for="Stocktake_sheets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fridge_trolley" class="control-label"></label>
+                <input asp-for="Fridge_trolley" class="form-control" />
+                <span asp-validation-for="Fridge_trolley" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Electronics_bin" class="control-label"></label>
+                <input asp-for="Electronics_bin" class="form-control" />
+                <span asp-validation-for="Electronics_bin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="High_vis" class="control-label"></label>
+                <input asp-for="High_vis" class="form-control" />
+                <span asp-validation-for="High_vis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IT_trolley" class="control-label"></label>
+                <input asp-for="IT_trolley" class="form-control" />
+                <span asp-validation-for="IT_trolley" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="File_trolley" class="control-label"></label>
+                <input asp-for="File_trolley" class="form-control" />
+                <span asp-validation-for="File_trolley" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Butchers_paper" class="control-label"></label>
+                <input asp-for="Butchers_paper" class="form-control" />
+                <span asp-validation-for="Butchers_paper" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Corrugated_cardboard" class="control-label"></label>
+                <input asp-for="Corrugated_cardboard" class="form-control" />
+                <span asp-validation-for="Corrugated_cardboard" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GAN_blanklabels" class="control-label"></label>
+                <input asp-for="GAN_blanklabels" class="form-control" />
+                <span asp-validation-for="GAN_blanklabels" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recycle_wastebin" class="control-label"></label>
+                <input asp-for="Recycle_wastebin" class="form-control" />
+                <span asp-validation-for="Recycle_wastebin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nitrile_gloves" class="control-label"></label>
+                <input asp-for="Nitrile_gloves" class="form-control" />
+                <span asp-validation-for="Nitrile_gloves" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IT_shelves" class="control-label"></label>
+                <input asp-for="IT_shelves" class="form-control" />
+                <span asp-validation-for="IT_shelves" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bollards" class="control-label"></label>
+                <input asp-for="Bollards" class="form-control" />
+                <span asp-validation-for="Bollards" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shrink_wrap" class="control-label"></label>
+                <input asp-for="Shrink_wrap" class="form-control" />
+                <span asp-validation-for="Shrink_wrap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Antistatic_bag" class="control-label"></label>
+                <input asp-for="Antistatic_bag" class="form-control" />
+                <span asp-validation-for="Antistatic_bag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Floorlift_protection" class="control-label"></label>
+                <input asp-for="Floorlift_protection" class="form-control" />
+                <span asp-validation-for="Floorlift_protection" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="A4location_labels" class="control-label"></label>
+                <input asp-for="A4location_labels" class="form-control" />
+                <span asp-validation-for="A4location_labels" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="General_waste_bin" class="control-label"></label>
+                <input asp-for="General_waste_bin" class="form-control" />
+                <span asp-validation-for="General_waste_bin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Toll_roads" class="control-label"></label>
+                <input asp-for="Toll_roads" class="form-control" />
+                <span asp-validation-for="Toll_roads" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Drill" class="control-label"></label>
+                <input asp-for="Drill" class="form-control" />
+                <span asp-validation-for="Drill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supervisors_bag" class="control-label"></label>
+                <input asp-for="Supervisors_bag" class="form-control" />
+                <span asp-validation-for="Supervisors_bag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dollies" class="control-label"></label>
+                <input asp-for="Dollies" class="form-control" />
+                <span asp-validation-for="Dollies" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Crowbar" class="control-label"></label>
+                <input asp-for="Crowbar" class="form-control" />
+                <span asp-validation-for="Crowbar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Packing_tape" class="control-label"></label>
+                <input asp-for="Packing_tape" class="form-control" />
+                <span asp-validation-for="Packing_tape" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ziplock_itbag" class="control-label"></label>
+                <input asp-for="Ziplock_itbag" class="form-control" />
+                <span asp-validation-for="Ziplock_itbag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Access_passes" class="control-label"></label>
+                <input asp-for="Access_passes" class="form-control" />
+                <span asp-validation-for="Access_passes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="A3floor_plans" class="control-label"></label>
+                <input asp-for="A3floor_plans" class="form-control" />
+                <span asp-validation-for="A3floor_plans" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cleaning_products" class="control-label"></label>
+                <input asp-for="Cleaning_products" class="form-control" />
+                <span asp-validation-for="Cleaning_products" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Jelly_beans" class="control-label"></label>
+                <input asp-for="Jelly_beans" class="form-control" />
+                <span asp-validation-for="Jelly_beans" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cable_ties" class="control-label"></label>
+                <input asp-for="Cable_ties" class="form-control" />
+                <span asp-validation-for="Cable_ties" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
