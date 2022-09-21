@@ -54,6 +54,99 @@ namespace Goals_Site.Data.Migrations
                     b.ToTable("Client");
                 });
 
+            modelBuilder.Entity("Goals_Site.Models.Job", b =>
+                {
+                    b.Property<int>("JobId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobId"), 1L, 1);
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Est_finish_time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("From_site")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Job_number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Project_managerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sales_managerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Scope")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Start")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("To_site")
+                        .HasColumnType("int");
+
+                    b.HasKey("JobId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("Project_managerId");
+
+                    b.HasIndex("Sales_managerId");
+
+                    b.ToTable("Job");
+                });
+
+            modelBuilder.Entity("Goals_Site.Models.Project_manager", b =>
+                {
+                    b.Property<int>("Project_managerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Project_managerId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Phone")
+                        .HasColumnType("int");
+
+                    b.HasKey("Project_managerId");
+
+                    b.ToTable("Project_manager");
+                });
+
+            modelBuilder.Entity("Goals_Site.Models.Sales_manager", b =>
+                {
+                    b.Property<int>("Sales_managerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Sales_managerId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Phone")
+                        .HasColumnType("int");
+
+                    b.HasKey("Sales_managerId");
+
+                    b.ToTable("Sales_manager");
+                });
+
             modelBuilder.Entity("Goals_Site.Models.Site", b =>
                 {
                     b.Property<int>("SiteId")
@@ -65,9 +158,6 @@ namespace Goals_Site.Data.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Contact_Name")
                         .IsRequired()
@@ -90,8 +180,6 @@ namespace Goals_Site.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("SiteId");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("Site");
                 });
@@ -298,15 +386,31 @@ namespace Goals_Site.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Goals_Site.Models.Site", b =>
+            modelBuilder.Entity("Goals_Site.Models.Job", b =>
                 {
                     b.HasOne("Goals_Site.Models.Client", "Client")
-                        .WithMany("Sites")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Goals_Site.Models.Project_manager", "Project_manager")
+                        .WithMany()
+                        .HasForeignKey("Project_managerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Goals_Site.Models.Sales_manager", "Sales_manager")
+                        .WithMany()
+                        .HasForeignKey("Sales_managerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Client");
+
+                    b.Navigation("Project_manager");
+
+                    b.Navigation("Sales_manager");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -358,11 +462,6 @@ namespace Goals_Site.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Goals_Site.Models.Client", b =>
-                {
-                    b.Navigation("Sites");
                 });
 #pragma warning restore 612, 618
         }

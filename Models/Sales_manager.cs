@@ -6,9 +6,5 @@
         public string Name { get; set; }
         public int Phone { get; set; }
 
-        Sales_manager()
-        {
-            
-        }
     }
 }

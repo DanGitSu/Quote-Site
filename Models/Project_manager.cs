@@ -8,9 +8,5 @@ namespace Goals_Site.Models
         public string Name { get; set; }
         public int Phone { get; set; }
 
-        Project_manager()
-        {
-            
-        }
     }
 }
