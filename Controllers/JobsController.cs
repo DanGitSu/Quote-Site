@@ -52,9 +52,9 @@ namespace Goals_Site.Controllers
         // GET: Jobs/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId");
-            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId");
-            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId");
+            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "Name");
+            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Name");
+            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Name");
             return View();
         }
 
@@ -174,6 +174,14 @@ namespace Goals_Site.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // PRINT
+        [HttpPost, ActionName("Preview")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Preview(int id)
+        {
+            return View("it worked");
         }
 
         private bool JobExists(int id)
