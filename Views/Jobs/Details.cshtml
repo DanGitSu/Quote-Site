@@ -72,7 +72,7 @@
     </dl>
     <dl class="row" style="float:right;">
         <dt>
-            <a asp-action="Preview">Create Job Sheet</a>
+            @Html.EJ().Button("CreateJobSheet").Text("Create Job Sheet").Type(ButtonType.Button).ClientSideEvents(e=>e.Click("onclick"))
         </dt>
     </dl>
 </div>

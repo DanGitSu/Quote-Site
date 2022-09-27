@@ -9,6 +9,9 @@ using Goals_Site.Data;
 using Goals_Site.Models;
 using System.Drawing.Printing;
 using Microsoft.AspNetCore.Http;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Goals_Site.Controllers
 {
@@ -176,12 +179,25 @@ namespace Goals_Site.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // PRINT
-        [HttpPost, ActionName("Preview")]
+        // POST Create Job Document
+        [HttpPost, ActionName("Document")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Preview(int id)
+        public async Task<IActionResult> Document()
         {
-            return View("it worked");
+            using (var doc = WordprocessingDocument.Create("TestAddText.docx", DocumentFormat.OpenXml.WordprocessingDocumentType.Document))
+            {
+                MainDocumentPart mainPart = doc.AddMainDocumentPart();
+                mainPart.Document = new DocumentFormat.OpenXml.Wordprocessing.Document();
+
+                Body body = mainPart.Document.AppendChild(new Body());
+
+                Paragraph para = body.AppendChild(new Paragraph());
+
+                DocumentFormat.OpenXml.Wordprocessing.Run run = para.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
+
+                run.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text("this is a new Document"));
+            }
+            return View("Index");
         }
 
         private bool JobExists(int id)
