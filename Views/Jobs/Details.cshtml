@@ -69,10 +69,14 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.To_site)
         </dd>
+        
     </dl>
     <dl class="row" style="float:right;">
         <dt>
-            @Html.EJ().Button("CreateJobSheet").Text("Create Job Sheet").Type(ButtonType.Button).ClientSideEvents(e=>e.Click("onclick"))
+            <form asp-action="Document">
+                <input type="hidden" asp-for="@Model.JobId" />
+                <input type="submit" value="Document" class="btn-primary" />
+            </form>
         </dt>
     </dl>
 </div>

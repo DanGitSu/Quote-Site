@@ -12,6 +12,12 @@ using Microsoft.AspNetCore.Http;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using OpenXMLTemplates.Variables;
+using OpenXMLTemplates.Engine;
+using Newtonsoft.Json.Linq;
+using Grpc.Core;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Goals_Site.Controllers
 {
@@ -182,23 +188,31 @@ namespace Goals_Site.Controllers
         // POST Create Job Document
         [HttpPost, ActionName("Document")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Document()
-        {
-            using (var doc = WordprocessingDocument.Create("TestAddText.docx", DocumentFormat.OpenXml.WordprocessingDocumentType.Document))
+        public async Task<IActionResult> DocumentCreate(int id)
+        { 
+            using var doc = new OpenXMLTemplates.Documents.TemplateDocument("Templates/Simplified.docx");
+
+            //if (job != null)
+            //{
+            //return RedirectToAction(nameof(Index));
+            //}
+            var
+            Job job = _context.Job.Find(id);
+            System.Collections.IDictionary valueDictionary = new Dictionary<string, string>
             {
-                MainDocumentPart mainPart = doc.AddMainDocumentPart();
-                mainPart.Document = new DocumentFormat.OpenXml.Wordprocessing.Document();
+                { "JobNumber", job.JobId.ToString() },
+                { "ProjectManager", "Antonio" }
+            };
 
-                Body body = mainPart.Document.AppendChild(new Body());
+            var src = new VariableSource(valueDictionary);
+            var engine = new DefaultOpenXmlTemplateEngine();
+            engine.ReplaceAll(doc, src);
+            doc.SaveAs("result.docx");
+            return RedirectToAction(nameof(Index));
+            
 
-                Paragraph para = body.AppendChild(new Paragraph());
-
-                DocumentFormat.OpenXml.Wordprocessing.Run run = para.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
-
-                run.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text("this is a new Document"));
-            }
-            return View("Index");
         }
+        
 
         private bool JobExists(int id)
         {
