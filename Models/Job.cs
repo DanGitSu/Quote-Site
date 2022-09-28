@@ -32,8 +32,12 @@ namespace Goals_Site.Models
 
         // Site Objects and ids
         [DisplayName("From Site:")]
-        public int From_site { get; set; }
+        public string From_site { get; set; }
         [DisplayName("To Site:")]
-        public int To_site { get; set; }
+        public string To_site { get; set; }
+
+        public int From_siteID { get; set; }
+        public string To_siteID { get; set; }
+
     }
 }

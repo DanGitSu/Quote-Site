@@ -88,6 +88,12 @@ namespace Goals_Site.Controllers
             //var client = await _context.Client.FindAsync(job.ClientId);
             //job.Client = client;
 
+            Site fSite = await _context.Site.FindAsync(Int32.Parse(job.From_site));
+            job.From_site = fSite.Address;
+
+            Site tSite = await _context.Site.FindAsync(Int32.Parse(job.To_site));
+            job.To_site = tSite.Address;
+
             _context.Add(job);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -222,6 +228,8 @@ namespace Goals_Site.Controllers
                 { "ClientTelephone", _context.Client.Find(job.ClientId).Contact_Phone.ToString() },
                 { "ClientEmail", _context.Client.Find(job.ClientId).Email.ToString() },
                 { "ClientReference", _context.Client.Find(job.ClientId).Reference.ToString() },
+                { "DeliveryAddress", job.From_site.ToString() },
+
                 
                 // Features to still be added
                 // Issue, Delivery Address, Site Contact, Telephone, Delivery Instructions, Accounts Info, Collection Address, Collection Date
