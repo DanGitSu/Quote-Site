@@ -64,6 +64,7 @@ namespace Goals_Site.Controllers
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "Name");
             ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Name");
             ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Name");
+            ViewData["Site_Id"] = new SelectList(_context.Site, "SiteId", "Address");
             return View();
         }
 
@@ -76,16 +77,26 @@ namespace Goals_Site.Controllers
         {
             //if (ModelState.IsValid)
             //{
-                
-                _context.Add(job);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+            // CONTEXT IS READ ONLY THIS WONT WORK
+            //var pManag = await _context.Project_manager.FindAsync(job.Project_managerId);
+            //job.Project_manager = pManag;
+
+            //var sManag = await _context.Sales_manager.FindAsync(job.Sales_managerId);
+            //job.Sales_manager = sManag;
+
+            //var client = await _context.Client.FindAsync(job.ClientId);
+            //job.Client = client;
+
+            _context.Add(job);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
             //}
             
-            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
-            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
-            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
-            return View(job);
+            //ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
+            //ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
+            //ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
+            //return View(job);
         }
 
         // GET: Jobs/Edit/5
@@ -192,24 +203,35 @@ namespace Goals_Site.Controllers
         { 
             using var doc = new OpenXMLTemplates.Documents.TemplateDocument("Templates/CrateTemp.docx");
 
-            //if (job != null)
-            //{
-            //return RedirectToAction(nameof(Index));
-            //}
+            if (_context.Job == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Job'  is null.");
+            }
 
-            Job job = _context.Job.Find(id);
+            var job = await _context.Job.FindAsync(id);
 
 
             System.Collections.IDictionary valueDictionary = new Dictionary<string, string>
             {
                 { "JobNumber",  job.Job_number.ToString() },
-                { "ProjectManager", "Antonio" }
+                { "ProjectManager", _context.Project_manager.Find(job.Project_managerId).Name.ToString() },
+                { "DeliveryDate", job.Date.ToString() }, // Do not confuse with Scheduled Move Date -> Although from Job.Date Field
+                { "DeliveryTime", job.Start.ToString() },// Do not confuse with Scheduled Move Date -> Although from Job.Time Field
+                { "ClientName", _context.Client.Find(job.ClientId).Name.ToString() },
+                { "ClientContact", _context.Client.Find(job.ClientId).Contact_Name.ToString() },
+                { "ClientTelephone", _context.Client.Find(job.ClientId).Contact_Phone.ToString() },
+                { "ClientEmail", _context.Client.Find(job.ClientId).Email.ToString() },
+                { "ClientReference", _context.Client.Find(job.ClientId).Reference.ToString() },
+                
+                // Features to still be added
+                // Issue, Delivery Address, Site Contact, Telephone, Delivery Instructions, Accounts Info, Collection Address, Collection Date
+
             };
 
             var src = new VariableSource(valueDictionary);
             var engine = new DefaultOpenXmlTemplateEngine();
             engine.ReplaceAll(doc, src);
-            doc.SaveAs("JobSheets / " + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_CrateSheet.docx");
+            doc.SaveAs("Documents/CrateSheets/ " + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_CrateSheet.docx");
             return RedirectToAction(nameof(Index));
             
 
@@ -238,7 +260,7 @@ namespace Goals_Site.Controllers
             var src = new VariableSource(valueDictionary);
             var engine = new DefaultOpenXmlTemplateEngine();
             engine.ReplaceAll(doc, src);
-            doc.SaveAs("JobSheets/" + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_JobSheet.docx");
+            doc.SaveAs("Documents/JobSheets/" + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_JobSheet.docx");
             return RedirectToAction(nameof(Index));
 
 
