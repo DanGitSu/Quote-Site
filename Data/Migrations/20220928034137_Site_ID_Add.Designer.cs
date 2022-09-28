@@ -4,6 +4,7 @@ using Goals_Site.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Goals_Site.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220928034137_Site_ID_Add")]
+    partial class Site_ID_Add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,127 +54,6 @@ namespace Goals_Site.Data.Migrations
                     b.HasKey("ClientId");
 
                     b.ToTable("Client");
-                });
-
-            modelBuilder.Entity("Goals_Site.Models.Equipment", b =>
-                {
-                    b.Property<int>("EquipmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EquipmentId"), 1L, 1);
-
-                    b.Property<int>("A3floor_plans")
-                        .HasColumnType("int");
-
-                    b.Property<int>("A4location_labels")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Access_passes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Antistatic_bag")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Bollards")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Bubble_wrap")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Butchers_paper")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Cable_ties")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Camera")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Cleaning_products")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Corrugated_cardboard")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Crowbar")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Dollies")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Drill")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Electronics_bin")
-                        .HasColumnType("int");
-
-                    b.Property<int>("File_trolley")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Floorlift_protection")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fridge_trolley")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GAN_blanklabels")
-                        .HasColumnType("int");
-
-                    b.Property<int>("General_waste_bin")
-                        .HasColumnType("int");
-
-                    b.Property<int>("High_vis")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IT_shelves")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IT_trolley")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Jelly_beans")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MR")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Nitrile_gloves")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Packing_tape")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Pads")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Recycle_wastebin")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Shrink_wrap")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stocktake_sheets")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Supervisors_bag")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Toll_roads")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Workstation_trolley")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ziplock_itbag")
-                        .HasColumnType("int");
-
-                    b.Property<int>("threeTonne_truck")
-                        .HasColumnType("int");
-
-                    b.HasKey("EquipmentId");
-
-                    b.ToTable("Equipment");
                 });
 
             modelBuilder.Entity("Goals_Site.Models.Job", b =>
@@ -222,8 +103,9 @@ namespace Goals_Site.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("To_siteID")
-                        .HasColumnType("int");
+                    b.Property<string>("To_siteID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("JobId");
 

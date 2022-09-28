@@ -9,6 +9,15 @@ using Goals_Site.Data;
 using Goals_Site.Models;
 using System.Drawing.Printing;
 using Microsoft.AspNetCore.Http;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using OpenXMLTemplates.Variables;
+using OpenXMLTemplates.Engine;
+using Newtonsoft.Json.Linq;
+using Grpc.Core;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Goals_Site.Controllers
 {
@@ -55,6 +64,7 @@ namespace Goals_Site.Controllers
             ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "Name");
             ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Name");
             ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Name");
+            ViewData["Site_Id"] = new SelectList(_context.Site, "SiteId", "Address");
             return View();
         }
 
@@ -67,16 +77,36 @@ namespace Goals_Site.Controllers
         {
             //if (ModelState.IsValid)
             //{
-                
-                _context.Add(job);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+            // CONTEXT IS READ ONLY THIS WONT WORK
+            //var pManag = await _context.Project_manager.FindAsync(job.Project_managerId);
+            //job.Project_manager = pManag;
+
+            //var sManag = await _context.Sales_manager.FindAsync(job.Sales_managerId);
+            //job.Sales_manager = sManag;
+
+            //var client = await _context.Client.FindAsync(job.ClientId);
+            //job.Client = client;
+
+            int temp = Int32.Parse(job.From_site);
+            int temp2 = Int32.Parse(job.To_site);
+            Site fSite = await _context.Site.FindAsync(temp);
+            job.From_site = fSite.Address;
+            Site tSite = await _context.Site.FindAsync(temp2);
+            job.To_site = tSite.Address;
+
+            job.From_siteID = temp;
+            job.To_siteID = temp2;
+
+            _context.Add(job);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
             //}
             
-            ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
-            ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
-            ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
-            return View(job);
+            //ViewData["ClientId"] = new SelectList(_context.Client, "ClientId", "ClientId", job.ClientId);
+            //ViewData["Project_managerId"] = new SelectList(_context.Project_manager, "Project_managerId", "Project_managerId", job.Project_managerId);
+            //ViewData["Sales_managerId"] = new SelectList(_context.Sales_manager, "Sales_managerId", "Sales_managerId", job.Sales_managerId);
+            //return View(job);
         }
 
         // GET: Jobs/Edit/5
@@ -175,6 +205,81 @@ namespace Goals_Site.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        // POST Create Crate Document
+        [HttpPost, ActionName("CrateSheet")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CrateSheet(int id)
+        { 
+            using var doc = new OpenXMLTemplates.Documents.TemplateDocument("Templates/CrateTemp.docx");
+
+            if (_context.Job == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Job'  is null.");
+            }
+
+            var job = await _context.Job.FindAsync(id);
+
+
+            System.Collections.IDictionary valueDictionary = new Dictionary<string, string>
+            {
+                { "JobNumber",  job.Job_number.ToString() },
+                { "ProjectManager", _context.Project_manager.Find(job.Project_managerId).Name.ToString() },
+                { "DeliveryDate", job.Date.ToString() }, // Do not confuse with Scheduled Move Date -> Although from Job.Date Field
+                { "DeliveryTime", job.Start.ToString() },// Do not confuse with Scheduled Move Date -> Although from Job.Time Field
+                { "ClientName", _context.Client.Find(job.ClientId).Name.ToString() },
+                { "ClientContact", _context.Client.Find(job.ClientId).Contact_Name.ToString() },
+                { "ClientTelephone", _context.Client.Find(job.ClientId).Contact_Phone.ToString() },
+                { "ClientEmail", _context.Client.Find(job.ClientId).Email.ToString() },
+                { "ClientReference", _context.Client.Find(job.ClientId).Reference.ToString() },
+                { "DeliveryAddress", job.To_site.ToString() },
+                { "SiteContact", _context.Site.Find(job.To_siteID).Contact_Name.ToString() },
+                { "Telephone", _context.Site.Find(job.To_siteID).Contact_Phone.ToString() }
+
+                
+                // Features to still be added
+                // Issue, Delivery Address, Site Contact, Telephone, Delivery Instructions, Accounts Info, Collection Address, Collection Date
+
+            };
+
+            var src = new VariableSource(valueDictionary);
+            var engine = new DefaultOpenXmlTemplateEngine();
+            engine.ReplaceAll(doc, src);
+            doc.SaveAs("Documents/CrateSheets/ " + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_CrateSheet.docx");
+            return RedirectToAction(nameof(Index));
+            
+
+        }
+
+
+        // POST Create Job Document
+        [HttpPost, ActionName("JobSheet")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> JobSheet(int id)
+        {
+            using var doc = new OpenXMLTemplates.Documents.TemplateDocument("Templates/Simplified.docx");
+
+            //if (job != null)
+            //{
+            //return RedirectToAction(nameof(Index));
+            //}
+
+            Job job = _context.Job.Find(id);
+            System.Collections.IDictionary valueDictionary = new Dictionary<string, string>
+            {
+                { "JobNumber",  job.Job_number.ToString() },
+                { "ProjectManager", "Antonio" }
+            };
+
+            var src = new VariableSource(valueDictionary);
+            var engine = new DefaultOpenXmlTemplateEngine();
+            engine.ReplaceAll(doc, src);
+            doc.SaveAs("Documents/JobSheets/" + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_JobSheet.docx");
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
 
         private bool JobExists(int id)
         {

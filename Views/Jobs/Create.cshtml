@@ -51,13 +51,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="From_site" class="control-label"></label>
-                <input asp-for="From_site" class="form-control" />
-                <span asp-validation-for="From_site" class="text-danger"></span>
+                <select asp-for="From_site" class="form-control" asp-items="ViewBag.Site_Id" ></select>
             </div>
             <div class="form-group">
                 <label asp-for="To_site" class="control-label"></label>
-                <input asp-for="To_site" class="form-control" />
-                <span asp-validation-for="To_site" class="text-danger"></span>
+                <select asp-for="To_site" class="form-control" asp-items="ViewBag.Site_Id"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
