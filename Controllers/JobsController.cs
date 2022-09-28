@@ -88,11 +88,15 @@ namespace Goals_Site.Controllers
             //var client = await _context.Client.FindAsync(job.ClientId);
             //job.Client = client;
 
-            Site fSite = await _context.Site.FindAsync(Int32.Parse(job.From_site));
+            int temp = Int32.Parse(job.From_site);
+            int temp2 = Int32.Parse(job.To_site);
+            Site fSite = await _context.Site.FindAsync(temp);
             job.From_site = fSite.Address;
-
-            Site tSite = await _context.Site.FindAsync(Int32.Parse(job.To_site));
+            Site tSite = await _context.Site.FindAsync(temp2);
             job.To_site = tSite.Address;
+
+            job.From_siteID = temp;
+            job.To_siteID = temp2;
 
             _context.Add(job);
             await _context.SaveChangesAsync();
@@ -228,7 +232,9 @@ namespace Goals_Site.Controllers
                 { "ClientTelephone", _context.Client.Find(job.ClientId).Contact_Phone.ToString() },
                 { "ClientEmail", _context.Client.Find(job.ClientId).Email.ToString() },
                 { "ClientReference", _context.Client.Find(job.ClientId).Reference.ToString() },
-                { "DeliveryAddress", job.From_site.ToString() },
+                { "DeliveryAddress", job.To_site.ToString() },
+                { "SiteContact", _context.Site.Find(job.To_siteID).Contact_Name.ToString() },
+                { "Telephone", _context.Site.Find(job.To_siteID).Contact_Phone.ToString() }
 
                 
                 // Features to still be added

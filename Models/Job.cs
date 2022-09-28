@@ -37,7 +37,7 @@ namespace Goals_Site.Models
         public string To_site { get; set; }
 
         public int From_siteID { get; set; }
-        public string To_siteID { get; set; }
+        public int To_siteID { get; set; }
 
     }
 }
