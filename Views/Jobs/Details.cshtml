@@ -71,15 +71,19 @@
         </dd>
         
     </dl>
-    <dl class="row" style="float:right;">
-        <dt>
-            <form asp-action="Document">
-                <input type="hidden" asp-for="@Model.JobId" />
-                <input type="submit" value="Document" class="btn-primary" />
-            </form>
-        </dt>
-    </dl>
-</div>
+    <div float="right">
+
+        <form asp-action="CrateSheet">
+            <input type="hidden" name="id" value="@Model.JobId" />
+            <input type="submit" value="Create Crate Sheet" class="btn-primary" />
+        </form>
+
+
+        <form asp-action="JobSheet">
+            <input type="hidden" name="id" value="@Model.JobId" />
+            <input type="submit" value="Create Job Sheet" class="btn-primary" />
+        </form>
+    </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.JobId">Edit</a> |
     <a asp-action="Index">Back to List</a>

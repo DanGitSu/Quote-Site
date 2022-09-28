@@ -185,34 +185,65 @@ namespace Goals_Site.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST Create Job Document
-        [HttpPost, ActionName("Document")]
+        // POST Create Crate Document
+        [HttpPost, ActionName("CrateSheet")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DocumentCreate(int id)
+        public async Task<IActionResult> CrateSheet(int id)
         { 
-            using var doc = new OpenXMLTemplates.Documents.TemplateDocument("Templates/Simplified.docx");
+            using var doc = new OpenXMLTemplates.Documents.TemplateDocument("Templates/CrateTemp.docx");
 
             //if (job != null)
             //{
             //return RedirectToAction(nameof(Index));
             //}
-            var
+
             Job job = _context.Job.Find(id);
+
+
             System.Collections.IDictionary valueDictionary = new Dictionary<string, string>
             {
-                { "JobNumber", job.JobId.ToString() },
+                { "JobNumber",  job.Job_number.ToString() },
                 { "ProjectManager", "Antonio" }
             };
 
             var src = new VariableSource(valueDictionary);
             var engine = new DefaultOpenXmlTemplateEngine();
             engine.ReplaceAll(doc, src);
-            doc.SaveAs("result.docx");
+            doc.SaveAs("JobSheets / " + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_CrateSheet.docx");
             return RedirectToAction(nameof(Index));
             
 
         }
-        
+
+
+        // POST Create Job Document
+        [HttpPost, ActionName("JobSheet")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> JobSheet(int id)
+        {
+            using var doc = new OpenXMLTemplates.Documents.TemplateDocument("Templates/Simplified.docx");
+
+            //if (job != null)
+            //{
+            //return RedirectToAction(nameof(Index));
+            //}
+
+            Job job = _context.Job.Find(id);
+            System.Collections.IDictionary valueDictionary = new Dictionary<string, string>
+            {
+                { "JobNumber",  job.Job_number.ToString() },
+                { "ProjectManager", "Antonio" }
+            };
+
+            var src = new VariableSource(valueDictionary);
+            var engine = new DefaultOpenXmlTemplateEngine();
+            engine.ReplaceAll(doc, src);
+            doc.SaveAs("JobSheets/" + job.Job_number.ToString() + "_" + job.Client.Name.ToString() + "_JobSheet.docx");
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
 
         private bool JobExists(int id)
         {
