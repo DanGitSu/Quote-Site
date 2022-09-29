@@ -5,7 +5,6 @@ namespace Goals_Site.Models
     public class Site
     {
         public int SiteId { get; set; }
-        public string Name { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string Contact_Name { get; set; } = null!;
         public int Contact_Phone { get; set; }

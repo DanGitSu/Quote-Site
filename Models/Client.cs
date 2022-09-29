@@ -1,22 +1,21 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Goals_Site.Models
 {
     public class Client
     {
+        [Key]
         public int ClientId { get; set; }
         [DisplayName("Name")]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
         [DisplayName("Contact Name")]
-        public string Contact_Name { get; set; } = null!;
+        public string Contact_Name { get; set; }
         [DisplayName("Contact Phone")]
         public int Contact_Phone { get; set; }
         [DisplayName("Email")]
-        public string Email { get; set; } = null!;
-        [DisplayName("Reference")]
-        public string Reference { get; set; } = null!;
-
-        // Site Collection
-        //public List<Site> Sites { get; set; } // not having a site in the form will prevent creation of a client
+        public string Email { get; set; }
+        public ICollection<Quote> Quotes { get; set; }
+        public ICollection<Site> Sites { get; set; }
     }
 }
